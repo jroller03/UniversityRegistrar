@@ -17,3 +17,7 @@ div#header {
   background:#333;
   padding:2px;
 }
+
+body {
+  text-align: center;
+}

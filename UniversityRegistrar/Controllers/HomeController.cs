@@ -24,6 +24,15 @@ namespace UniversityRegistrar.Controllers
         List<Course> allCourses = Course.GetAllCourses();
         return View("ViewAllCourses", allCourses);
       }
-
+      [HttpGet("/student/new")]
+      public ActionResult CreateForm()
+      {
+          return View();
+      }
+      [HttpGet("/course/new")]
+      public ActionResult CreateForm()
+      {
+          return View();
+      }
     }
 }
