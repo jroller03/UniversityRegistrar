@@ -42,7 +42,7 @@ namespace UniversityRegistrar.Controllers
         public ActionResult AddStudent(int courseId)
         {
             Course course = Course.Find(courseId);
-            Student student = Student.Find(Int32.Parse(Request.Form["student-id"]));
+            Student student = Student.Find(Int32.Parse(Request.Form["id"]));
             course.AddStudent(student);
             return RedirectToAction("Details",  new { id = courseId });
         }
@@ -61,5 +61,20 @@ namespace UniversityRegistrar.Controllers
             List<Course> allCourses = Course.GetAllCourses();
             return View("Index", allCourses);
         }
+        [HttpGet("/update-course/{id}")]
+        public ActionResult UpdateCourse(int id)
+        {
+            Course updateCourse = Course.Find(id);
+            return View(updateCourse);
+        }
+        [HttpPost("/course-updated/{id}")]
+        public ActionResult UpdatedCourse(int id)
+        {
+            string newCourseName = Request.Form["courseName"];
+            Course newCourse = new Course(newCourseName, id);
+            newCourse.UpdateCourse(newCourseName);
+            return RedirectToAction("AddCourse");
+        }
+
     }
 }

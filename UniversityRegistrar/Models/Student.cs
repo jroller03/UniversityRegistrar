@@ -240,5 +240,22 @@ namespace UniversityRegistrar
         conn.Close();
       }
     }
+    public void UpdateStudent(string newStudent)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE students SET name = @name WHERE id = @searchId";
+      cmd.Parameters.Add(new MySqlParameter("@searchId", _id));
+      cmd.Parameters.Add(new MySqlParameter("@name", newStudent));
+      cmd.ExecuteNonQuery();
+      _name = newStudent;
+      conn.Close();
+      if (conn !=null)
+      {
+          conn.Dispose();
+      }
+    }
   }
 }
