@@ -227,12 +227,12 @@ namespace UniversityRegistrar
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM students WHERE student_id = @StudentId; DELETE FROM course_info WHERE student_id = @StudentId;";
+      cmd.CommandText = @"DELETE FROM students WHERE id = @thisId; DELETE FROM courses_students WHERE course_id = @thisId;";
 
-      MySqlParameter studentIdParameter = new MySqlParameter();
-      studentIdParameter.ParameterName = "@StudentId";
-      studentIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(studentIdParameter);
+      MySqlParameter idParameter = new MySqlParameter();
+      idParameter.ParameterName = "@thisId";
+      idParameter.Value = this.GetId();
+      cmd.Parameters.Add(idParameter);
 
       cmd.ExecuteNonQuery();
       if (conn != null)
