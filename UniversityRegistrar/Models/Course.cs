@@ -142,12 +142,12 @@ namespace UniversityRegistrar
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM courses WHERE id = @courseId; DELETE FROM course_students WHERE id = @id;";
+      cmd.CommandText = @"DELETE FROM courses WHERE id = @thisId; DELETE FROM courses_students WHERE course_id = @thisId;";
 
-      MySqlParameter courseIdParameter = new MySqlParameter();
-      courseIdParameter.ParameterName = "@CourseId";
-      courseIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(courseIdParameter);
+      MySqlParameter idParameter = new MySqlParameter();
+      idParameter.ParameterName = "@thisId";
+      idParameter.Value = this.GetId();
+      cmd.Parameters.Add(idParameter);
 
       cmd.ExecuteNonQuery();
       if (conn != null)
@@ -189,10 +189,10 @@ namespace UniversityRegistrar
             JOIN students ON (course_students.student_id = students.student_id)
             WHERE courses.course_id = @CourseId;";
 
-        MySqlParameter courseIdParameter = new MySqlParameter();
-        courseIdParameter.ParameterName = "@CourseId";
-        courseIdParameter.Value = _id;
-        cmd.Parameters.Add(courseIdParameter);
+        MySqlParameter idParameter = new MySqlParameter();
+        idParameter.ParameterName = "@CourseId";
+        idParameter.Value = _id;
+        cmd.Parameters.Add(idParameter);
 
         var rdr = cmd.ExecuteReader() as MySqlDataReader;
 
