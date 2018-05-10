@@ -32,7 +32,7 @@ namespace UniversityRegistrar.Controllers
             Dictionary<string, object> model = new Dictionary<string, object>();
             Student selectedStudent = Student.Find(id);
             List<Course> studentCourses = selectedStudent.GetCourses();
-            List<Course> allCourses = Course.GetAll();
+            List<Course> allCourses = Course.GetAllCourses();
             model.Add("selectedStudent", selectedStudent);
             model.Add("studentCourses", studentCourses);
             model.Add("allCourses", allCourses);
@@ -54,7 +54,7 @@ namespace UniversityRegistrar.Controllers
             List<Student> allStudents = Student.GetAll();
             return View("Index", allStudents);
         }
-        [HttpGet("/students/delete")]
+        [HttpGet("/students/deleteall")]
         public ActionResult DeleteAll()
         {
             Student.DeleteAll();

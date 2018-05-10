@@ -7,9 +7,10 @@ namespace UniversityRegistrar
 {
   public class Course
   {
-    private int _id;
+
     private string _courseName;
     private int _courseNo;
+    private int _id;
 
     public Course(string CourseName, int CourseNumber, int id = 0)
     {
@@ -55,10 +56,10 @@ namespace UniversityRegistrar
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
 
-      cmd.CommandText = @"INSERT INTO courses (course_name, course_number) VALUES (@thisCourseName, @thisCourseNumber);";
+      cmd.CommandText = @"INSERT INTO courses (course_name, course_number) VALUES (@thisCourseName, @thisCourseNo);";
 
-      cmd.Parameters.Add(new MySqlParameter("@thisCourseName", _courseName));
-      cmd.Parameters.Add(new MySqlParameter("@thisCourseNumber", _courseNo));
+      cmd.Parameters.Add(new MySqlParameter("@thisCourseName", this._courseName));
+      cmd.Parameters.Add(new MySqlParameter("@thisCourseNo", this._courseNo));
 
       cmd.ExecuteNonQuery();
       _id = (int) cmd.LastInsertedId;
@@ -141,7 +142,7 @@ namespace UniversityRegistrar
       MySqlConnection conn = DB.Connection();
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM courses WHERE id = @courseId; DELETE FROM course_students WHERE id = @id;"
+      cmd.CommandText = @"DELETE FROM courses WHERE id = @courseId; DELETE FROM course_students WHERE id = @id;";
 
       MySqlParameter courseIdParameter = new MySqlParameter();
       courseIdParameter.ParameterName = "@CourseId";
@@ -166,10 +167,10 @@ namespace UniversityRegistrar
         student_id.Value = newStudent.GetId();
         cmd.Parameters.Add(student_id);
 
-        MySqlParameter course_id = new MySqlParameter();
-        course_id.ParameterName = "@CourseId";
-        course_id.Value = _course_id;
-        cmd.Parameters.Add(course_id);
+        MySqlParameter _id = new MySqlParameter();
+        _id.ParameterName = "@CourseId";
+        _id.Value = _id;
+        cmd.Parameters.Add(_id);
 
         cmd.ExecuteNonQuery();
         conn.Close();
@@ -190,7 +191,7 @@ namespace UniversityRegistrar
 
         MySqlParameter courseIdParameter = new MySqlParameter();
         courseIdParameter.ParameterName = "@CourseId";
-        courseIdParameter.Value = _course_id;
+        courseIdParameter.Value = _id;
         cmd.Parameters.Add(courseIdParameter);
 
         var rdr = cmd.ExecuteReader() as MySqlDataReader;
@@ -220,7 +221,7 @@ namespace UniversityRegistrar
                 int StudentId = studentQueryRdr.GetInt32(0);
                 string studentName = studentQueryRdr.GetString(1);
                 string studentDate = studentQueryRdr.GetString(2);
-                Student foundStudent = new Student(studentName, studentDate, thisStudentId);
+                Student foundStudent = new Student(studentName, studentDate, studentId);
                 students.Add(foundStudent);
             }
             studentQueryRdr.Dispose();

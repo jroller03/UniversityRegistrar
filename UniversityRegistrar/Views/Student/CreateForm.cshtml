@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+@{
+  Layout = "_Layout";
+}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>University of Washington Registrar</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <script src="~/js/jquery-3.3.1.js"></script>
+  </head>
+  <body>
+    <div class = "container text-center">
+      <h1>Add a new student</h1>
+      <form action="/students" method="post">
+        <label for="student-name">Student Name:</label>
+        <input id="student-name" name="student-name" type="text">
+        <label for="student-date">Student Enrollment Date:</label>
+        <input id="student-date" name="student-date" type="text">
+        <button type="submit">Add new student</button>
+      </form>
+      <p><a href="/">Back home</a></p>
+      <p><a href="/students">View all students</a></p>
+    </div>
+  </body>
+</html>

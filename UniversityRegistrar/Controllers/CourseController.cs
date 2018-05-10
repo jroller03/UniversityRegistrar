@@ -11,7 +11,7 @@ namespace UniversityRegistrar.Controllers
         [HttpGet("/courses/index")]
         public ActionResult Index()
         {
-            List<Course> allCourses = Course.GetAll();
+            List<Course> allCourses = Course.GetAllCourses();
             return View(allCourses);
         }
         [HttpGet("/courses/new")]
@@ -22,7 +22,7 @@ namespace UniversityRegistrar.Controllers
         [HttpPost("/courses")]
         public ActionResult Create()
         {
-            Course newCourse = new Course(Request.Form["courseName"], Request.Form["courseNo"]);
+            Course newCourse = new Course(Request.Form["courseName"], Int32.Parse(Request.Form["courseNo"]));
             newCourse.Save();
             return RedirectToAction("Success", "Home");
         }
@@ -51,14 +51,14 @@ namespace UniversityRegistrar.Controllers
         {
           Course course = Course.Find(courseId);
           course.Delete();
-          List<Course> allCourses = Course.GetAll();
+          List<Course> allCourses = Course.GetAllCourses();
           return View("Index", allCourses);
         }
-        [HttpGet("/courses/delete")]
+        [HttpGet("/courses/deleteall")]
         public ActionResult DeleteAll()
         {
             Course.DeleteAll();
-            List<Course> allCourses = Course.GetAll();
+            List<Course> allCourses = Course.GetAllCourses();
             return View("Index", allCourses);
         }
     }

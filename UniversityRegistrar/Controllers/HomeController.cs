@@ -12,6 +12,10 @@ namespace UniversityRegistrar.Controllers
       {
           return View();
       }
-      
+      [HttpGet("/success")]
+        public ActionResult Success()
+        {
+            return View();
+        }
     }
 }

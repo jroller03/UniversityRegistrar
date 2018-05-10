@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+@{
+  Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <script src="~/js/jquery-3.3.1.js"></script>
+    <title>University of Washington Registrar</title>
+  </head>
+  <body>
+    <div class = "container text-center">
+      <h1>University Registrar Courses</h1>
+      <ul>
+        @if (Model != null)
+        {
+          @foreach (var course in Model)
+          {
+            <li><a href='/courses/@course.GetId()'>@course.GetCourseName() @course.GetCourseNo() <a href="/courses/@course.GetId()/delete"><button type="button" name="button">Delete Course</button></a></a></li>
+          }
+        }
+      </ul>
+      <a href="/courses/new"><button type="button" name="button">Add Course</button></a>
+      <a href="/courses/deleteall"><button type="button" name="button">Delete All Courses</button></a>
+      <h4><a href="/">Return home</a></h4>
+    </div>
+  </body>
+</html>
