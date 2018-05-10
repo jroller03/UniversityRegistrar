@@ -198,5 +198,47 @@ namespace UniversityRegistrar
           conn.Dispose();
       }
     }
+    public static List<Student> GetAll()
+    {
+        List<Student> allStudents = new List<Student> {};
+        MySqlConnection conn = DB.Connection();
+        conn.Open();
+        var cmd = conn.CreateCommand() as MySqlCommand;
+        cmd.CommandText = @"SELECT * FROM students;";
+        var rdr = cmd.ExecuteReader() as MySqlDataReader;
+        while(rdr.Read())
+        {
+          int studentId = rdr.GetInt32(0);
+          string studentName = rdr.GetString(1);
+          string studentDate = rdr.GetString(2);
+
+          Student newStudent = new Student(studentName, studentDate, studentId);
+          allStudents.Add(newStudent);
+        }
+        conn.Close();
+        if (conn != null)
+        {
+            conn.Dispose();
+        }
+        return allStudents;
+    }
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM students WHERE student_id = @StudentId; DELETE FROM course_info WHERE student_id = @StudentId;";
+
+      MySqlParameter studentIdParameter = new MySqlParameter();
+      studentIdParameter.ParameterName = "@StudentId";
+      studentIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(studentIdParameter);
+
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }
